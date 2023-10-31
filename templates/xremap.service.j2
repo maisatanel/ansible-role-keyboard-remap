@@ -1,0 +1,12 @@
+[Unit]
+Description=xremap
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=30
+ExecStartPre=/bin/sleep 2
+ExecStart=/home/{{ ansible_user_id }}/.cargo/bin/xremap /etc/xremap/config.yml
+
+[Install]
+WantedBy=default.target

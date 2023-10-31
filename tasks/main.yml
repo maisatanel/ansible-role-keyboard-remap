@@ -1,0 +1,60 @@
+---
+
+- name: Install xremap extension
+  ansible.builtin.include_role:
+    name: petermosmans.customize-gnome
+  vars:
+    gnome_extensions:
+    - id: 5060 # install xremap extension
+      enable: true
+
+- name: Set the correct SELinux type for /home/{{ ansible_user_id }}/.cargo/bin
+  community.general.sefcontext:
+    target: '/home/{{ ansible_user_id }}/.cargo/bin(/.*)?'
+    setype: bin_t
+    state: present
+  when: ansible_facts.selinux.status == 'enabled'
+  become: true
+
+- name: Apply the correct SELinux type for /home/{{ ansible_user_id }}/.cargo/bin
+  ansible.builtin.command: 'restorecon -Rv /home/{{ ansible_user_id }}/.cargo/bin'
+  become: true
+  when: ansible_facts.selinux.status == 'enabled'
+
+- name: Ensure /usr/local/lib/systemd/system exists
+  ansible.builtin.file:
+    path: /usr/local/lib/systemd/system
+    mode: "0755"
+    setype: systemd_unit_file_t
+    state: directory
+  become: true
+
+- name: Add xremap systemd service template
+  ansible.builtin.template:
+    src: xremap.service.j2
+    dest: /usr/local/lib/systemd/system/xremap.service
+    mode: "0644"
+    setype: systemd_unit_file_t
+  become: true
+
+- name: Create xremap config directory
+  ansible.builtin.file:
+    path: /etc/xremap
+    state: directory
+    mode: "0755"
+  become: true
+
+- name: Add xremap configuration
+  ansible.builtin.copy:
+    src: keymap.yml
+    dest: /etc/xremap/config.yml
+    mode: "0644"
+  become: true
+
+- name: Start xremap and set to autostart
+  ansible.builtin.systemd_service:
+    name: xremap
+    state: restarted
+    daemon_reload: true
+    enabled: true
+  become: true

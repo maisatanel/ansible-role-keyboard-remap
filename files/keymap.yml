@@ -1,0 +1,56 @@
+keymap:
+  - name: ⌃ --> ⌥
+#    application:
+#      not: com.raggesilver.BlackBox
+    remap:
+      Alt-Backspace: Ctrl-Backspace
+      Alt-Left: Ctrl-Left
+      Alt-Right: Ctrl-Right
+
+  - name: Layout
+    remap:
+      KEY_FN: Super-Space
+
+# remapping cmd actions is more hassle than it's worth. the settings above are crucial though
+
+  # - name: ⌘A
+  #   remap:
+  #     Super-A: Ctrl-A
+  #     Ctrl-A: Super-A
+  # - name: ⌘S
+  #   remap:
+  #     Super-S: Ctrl-S
+  #     Ctrl-S: Super-S
+  # - name: ⌘F
+  #   remap:
+  #     Super-F: Ctrl-F
+  # - name: ⌘Z
+  #   remap:
+  #     Super-Z: Ctrl-Z
+  # - name: ⌘⇧Z
+  #   remap:
+  #     Super-Shift-Z: Ctrl-Y
+  # - name: ⌘X
+  #   remap:
+  #     Super-X: Ctrl-X
+  # - name: ⌘C
+  #   application:
+  #     not: /blackbox/
+  #   remap:
+  #     Super-C: Ctrl-C
+  # - name: ⌘C in BlackBox
+  #   application:
+  #     only: /blackbox/
+  #   remap:
+  #     Super-C: Super-Shift-C
+  # - name: ⌘V
+  #   application:
+  #     not: /blackbox/
+  #   remap:
+  #     Super-V: Ctrl-V
+  #     Ctrl-V: Super-V
+  # - name: ⌘C in BlackBox
+  #   application:
+  #     only: /blackbox/
+  #   remap:
+  #     Super-V: Super-Shift-V
